@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+/*Ejemplo de edicion*/
 
 #define SIZE_BOARD 8
 #define NUM_PIECES 16
