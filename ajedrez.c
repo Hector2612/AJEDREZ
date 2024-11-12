@@ -8,11 +8,11 @@
 
 #define LOST_PIECE 0
 #define PEON 1
-#define CABALLO 2
+#define CABALLO 4
 #define ALFIL 3
-#define TORRE 4
-#define REY 5
-#define REINA 6
+#define TORRE 5
+#define REY 50
+#define REINA 8
 
 /*
 La convención del tablero es la siguiente:
@@ -37,29 +37,42 @@ typedef struct
     short is_destroyed; /* 1 si la ficha esta viva, 0 sino. */
     int xpos;
     int ypos;
-    int equipo; /*0 si es blanca y 1 si es negra.*/
+    //he quitado el equipo porque en la estructura ya se distingue si es blanca o negra
 } Piece;
 
 short move();
-short inicialboard(long **board);
+short inicialboard(long **board); //coloca todas las piezas en su sitio
 short displayboard();
 
 int main()
 {
     long board[SIZE_BOARD][SIZE_BOARD];
     Piece pieces[NUM_PLAYERS][NUM_PIECES];
-
-    /*Ya que la estructura de este arraytiene 16 fichas en 2 filas seguidas.
+        /*Ya que la estructura de este arraytiene 16 fichas en 2 filas seguidas.
       Las primeras 8 son los peones, las siguientes los caballos, los siguientes los alfiles, luego las 2 
       torres, laugo la dama y luego el rey. Las blancas son 0 y negras 1. Ej: para acceder a las torres 
       blancas usamos pieces[0][12] o pieces[0][13].
+      CÓDIGO DE PIEZAS
+      pieces[0][0] a pieces[0][7] peones;
+      pieces[0][8] torre izquierda, pieces[0][9] torre derecha
+      pieces[0][10] caballo izquierda, pieces[0][11] caballo derecha
+      pieces[0][12] alfil izquierda, pieces[0][13] alfil derecha
+      pieces[0][14] reina, pieces[0][15] rey
+      ANALOGO PARA NEGRAS; (CONSIDERANDO IZQUIERDA Y DERECHA DESDE EL PUNTO DE VISTA DE LAS BLANCAS SIEMPRE)
      */
-
+    int score[NUM_PLAYERS]; //con esto iremos almacenando la puntuacion de ambos jugadores
     int i = 0;
     int error; // para los codigos de error
 
+    error=inicialboard(board);
     
-    /*Incicaliza las piezas a sus estados iniciales iniciales.*/
+    if(error==-1) {
+        printf("No se ha podido ejecutar el programa");
+        return 1; //devolveremos 1 en vez de 0 con los errores
+    }
+    
+    /*Incicaliza las piezas a sus estados iniciales iniciales.
+    NOTA: aprovecha mi inicializacion del tablero para la inicializacion de la posicion y del tipo*/
     for (i = 0; i < NUM_PIECES; i++)
     {
         
@@ -74,10 +87,12 @@ short inicialboard(long **board)
     {
         return -1;
     }
+    
     // primero inicializo los peones de las blancas
     for(j=0; j<SIZE_BOARD; j++) {
         board[1][j]=PEON;
     }
+    
     // ahora peones negras
     for(j=0; j<SIZE_BOARD; j++) {
         board[7][j]=PEON;
@@ -96,6 +111,25 @@ short inicialboard(long **board)
             board[i][j]=CABALLO;
         }
     }
+
+    //inicializo alfiles
+    for(i=0; i<SIZE_BOARD; i+=7) {
+        for(j=2; j<SIZE_BOARD; j +=3) {
+            board[i][j]=ALFIL;
+        }
+    }
+
+    //inicializo reina
+    for(i=0; i<SIZE_BOARD; i+=7) {
+        board[i][3]=REINA;
+    }
+
+    //inicializo reyes
+    for(i=0; i<SIZE_BOARD; i+=7) {
+        board[i][4]=REY;
+    }
+    
+    return 0; //todo ha salido correcto
 }
 
 short move()
