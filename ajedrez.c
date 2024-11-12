@@ -59,7 +59,7 @@ int main()
     int error; // para los codigos de error
 
     
-    /*Incicaliza las piezas a sus posicionees iniciales.*/
+    /*Incicaliza las piezas a sus estados iniciales iniciales.*/
     for (i = 0; i < NUM_PIECES; i++)
     {
         
