@@ -173,7 +173,7 @@ short move()
 }
 
 short displayboard(long **board, Piece **pieces) {
-    int i,j;
+    int i,j,k;
     short piece; //alamacena la posicion de la ficha en cada caso
     
     printf("  ");
@@ -182,6 +182,12 @@ short displayboard(long **board, Piece **pieces) {
     }
     printf("\n");
 
+    printf("  ");
+    for(k=0; k<3*SIZE_BOARD; k++) {
+        printf("_");
+    }
+    printf("\n");
+    
     for(i=0; i<SIZE_BOARD; i++) {
         for(j=0; j<SIZE_BOARD; j++) {
             printf("%c |",'A'+i);
@@ -196,6 +202,12 @@ short displayboard(long **board, Piece **pieces) {
                     printf(" |");
                 }
             }
+            
+            printf("  ");
+            for(k=0; k<3*SIZE_BOARD; k++) {
+                printf("_");
+            }
+            printf("\n");
         }
     }
 }
