@@ -6,13 +6,19 @@
 #define NUM_PIECES 16
 #define NUM_PLAYERS 2
 
-#define LOST_PIECE 0
+#define LOST_PIECE 0 //alomejor no es necesario
 #define PEON 1
 #define CABALLO 4
 #define ALFIL 3
 #define TORRE 5
 #define REY 50
 #define REINA 8
+#define PEON_NEGRO -1
+#define CABALLO_NEGRO -4
+#define ALFIL_NEGRO -3
+#define TORRE_NEGRO -5
+#define REY_NEGRO -50
+#define REINA_NEGRO -8
 
 /*
 La convención del tablero es la siguiente:
@@ -30,6 +36,22 @@ Entendemos que a1 es una casilla negra.
 El enlace no es nada raro, simplemente es largo.
 */
 
+/*// Piezas de ajedrez blancas, usa estos simbolos
+    char *rey_blanco = "♔";    
+    char *reina_blanca = "♕";  
+    char *torre_blanca = "♖";  
+    char *alfil_blanco = "♗";  
+    char *caballo_blanco = "♘"; 
+    char *peon_blanco = "♙";   
+
+    // Piezas de ajedrez negras
+    char *rey_negro = "♚";     
+    char *reina_negra = "♛";  
+    char *torre_negra = "♜";  
+    char *alfil_negro = "♝";   
+    char *caballo_negro = "♞"; 
+    char *peon_negro = "♟";    */
+
 /*La estrucutra que se usa para hacer las fichas*/
 typedef struct
 {
@@ -38,14 +60,18 @@ typedef struct
     int xpos;
     int ypos;
     //he quitado el equipo porque en la estructura ya se distingue si es blanca o negra
+    char *simbolo;
+    
 } Piece;
 
 short move();
 short inicialboard(long **board); //coloca todas las piezas en su sitio
 short displayboard();
+short findPieces(int fila, int columna, int jugador, Piece **pieces); //el jugador, es que cuando toque a las blancas enviamos 0, y sino 1
 
 int main()
 {
+    system("chcp 65001 >nul"); //para que el compilador acepte codgos unicode
     long board[SIZE_BOARD][SIZE_BOARD];
     Piece pieces[NUM_PLAYERS][NUM_PIECES];
         /*Ya que la estructura de este arraytiene 16 fichas en 2 filas seguidas.
@@ -63,6 +89,7 @@ int main()
     int score[NUM_PLAYERS]; //con esto iremos almacenando la puntuacion de ambos jugadores
     int i = 0;
     int error; // para los codigos de error
+    int fila, columna; //para cuando solicites que elija ficha que mover solicitamos la poscion de la ficha que quiere mover
 
     error=inicialboard(board);
     
@@ -132,8 +159,50 @@ short inicialboard(long **board)
     return 0; //todo ha salido correcto
 }
 
+short findPieces(int fila, int columna, int jugador, Piece **pieces) {
+    int i, piezacorrecta=0;
+    
+    if(!pieces) {
+        return -1; //codigo de error CUANDO LLAMEMOS A LA FUNCION EN EL MAIN COMPROBAR
+    }
+    
+    for(i=0; i<NUM_PIECES && !piezacorrecta ; i++) {
+        if((pieces[jugador][i]).xpos == columna && (pieces[jugador][i]).ypos ==fila) 
+            piezacorrecta=-2; //si la posicion de la pieza es igual a la fila y columna seleccionada es que hemos encontrado la pieza
+    }
+
+    return i; //devuelve posicion array
+}
+
 short move()
 {
 }
 
-short displayboard(long **board) {}
+short displayboard(long **board) {
+    int i,j;
+    
+    printf("  ");
+    for(i=1; i<=SIZE_BOARD; i++) {
+        printf(" %d ", i);
+    }
+    printf("\n");
+
+    for(i=0; i<SIZE_BOARD; i++) {
+        for(j=0; j<SIZE_BOARD; j++) {
+            switch (board[i][j]) {
+                case PEON:
+                case ALFIL:
+                case TORRE:
+                case CABALLO:
+                case REINA:
+                case REY:
+                case PEON_NEGRO:
+                case ALFIL_NEGRO:
+                case TORRE_NEGRO_NEGRO:
+                case CABALLO_NEGRO:
+                case REINA_NEGRO:
+                case REY_NEGRO:
+            }
+        }
+    }
+}
