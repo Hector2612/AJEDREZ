@@ -13,12 +13,6 @@
 #define TORRE 5
 #define REY 50
 #define REINA 8
-#define PEON_NEGRO -1
-#define CABALLO_NEGRO -4
-#define ALFIL_NEGRO -3
-#define TORRE_NEGRO -5
-#define REY_NEGRO -50
-#define REINA_NEGRO -8
 
 /*
 La convención del tablero es la siguiente:
@@ -178,7 +172,7 @@ short move()
 {
 }
 
-short displayboard(long **board) {
+short displayboard(long **board, Piece **pieces) {
     int i,j;
     
     printf("  ");
@@ -190,18 +184,13 @@ short displayboard(long **board) {
     for(i=0; i<SIZE_BOARD; i++) {
         for(j=0; j<SIZE_BOARD; j++) {
             switch (board[i][j]) {
+                if(findPieces(i,j,0,pieces))
                 case PEON:
                 case ALFIL:
                 case TORRE:
                 case CABALLO:
                 case REINA:
                 case REY:
-                case PEON_NEGRO:
-                case ALFIL_NEGRO:
-                case TORRE_NEGRO_NEGRO:
-                case CABALLO_NEGRO:
-                case REINA_NEGRO:
-                case REY_NEGRO:
             }
         }
     }
