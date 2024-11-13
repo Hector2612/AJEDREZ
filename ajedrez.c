@@ -182,9 +182,9 @@ short displayboard(long **board, Piece **pieces) {
     }
     printf("\n");
 
-    printf("  ");
+    printf("  "); 
     for(k=0; k<3*SIZE_BOARD; k++) {
-        printf("_");
+        printf("_");//no se si queda bien solo probar, alomejor lo quito
     }
     printf("\n");
     
