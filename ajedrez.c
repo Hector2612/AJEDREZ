@@ -174,6 +174,7 @@ short move()
 
 short displayboard(long **board, Piece **pieces) {
     int i,j;
+    short piece; //alamacena la posicion de la ficha en cada caso
     
     printf("  ");
     for(i=1; i<=SIZE_BOARD; i++) {
@@ -183,14 +184,17 @@ short displayboard(long **board, Piece **pieces) {
 
     for(i=0; i<SIZE_BOARD; i++) {
         for(j=0; j<SIZE_BOARD; j++) {
-            switch (board[i][j]) {
-                if(findPieces(i,j,0,pieces))
-                case PEON:
-                case ALFIL:
-                case TORRE:
-                case CABALLO:
-                case REINA:
-                case REY:
+            printf("%c |",'A'+i);
+            posicion=findPieces(i,j,0,pieces); //compruebo si esta en las blancas
+            if(posicion!=-2) {
+                printf(" %s |",pieces[0][posicion].simbolo);
+            } else {
+                posicion=findPieces(i,j,1,pieces); //ahora hago lo mismo con las negras
+                if(posicion!=-2) {
+                    printf("%s|",pieces[1][posicion].simbolo);
+                } else {
+                    printf(" |");
+                }
             }
         }
     }
