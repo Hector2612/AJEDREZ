@@ -60,7 +60,7 @@ typedef struct
 
 short move();
 short inicialboard(long **board); //coloca todas las piezas en su sitio
-short displayboard();
+short displayboard(long **board, Piece **pieces); //display de blancas/negra
 short findPieces(int fila, int columna, int jugador, Piece **pieces); //el jugador, es que cuando toque a las blancas enviamos 0, y sino 1
 
 int main()
