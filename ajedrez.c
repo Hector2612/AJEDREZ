@@ -182,12 +182,6 @@ short displayboard(long **board, Piece **pieces) {
     }
     printf("\n");
 
-    printf("  "); 
-    for(k=0; k<3*SIZE_BOARD; k++) {
-        printf("_");//no se si queda bien solo probar, alomejor lo quito
-    }
-    printf("\n");
-    
     for(i=0; i<SIZE_BOARD; i++) {
         for(j=0; j<SIZE_BOARD; j++) {
             printf("%c |",'A'+i);
@@ -201,11 +195,6 @@ short displayboard(long **board, Piece **pieces) {
                 } else {
                     printf(" |");
                 }
-            }
-            
-            printf("  ");
-            for(k=0; k<3*SIZE_BOARD; k++) {
-                printf("_");
             }
             printf("\n");
         }
