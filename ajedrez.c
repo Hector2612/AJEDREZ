@@ -59,7 +59,7 @@ typedef struct
 } Piece;
 
 short move();
-short inicialboard(long **board); //coloca todas las piezas en su sitio
+short inicialpieces(Piece **pieces); //inicializa piezas
 short displayboard(long **board, Piece **pieces); //display de blancas/negra
 short findPieces(int fila, int columna, int jugador, Piece **pieces); //el jugador, es que cuando toque a las blancas enviamos 0, y sino 1
 
@@ -94,63 +94,41 @@ int main()
     
     /*Incicaliza las piezas a sus estados iniciales iniciales.
     NOTA: aprovecha mi inicializacion del tablero para la inicializacion de la posicion y del tipo*/
-    for (i = 0; i < NUM_PIECES; i++)
-    {
-        
-    }
+    
+
 }
 
-short inicialboard(long **board)
-{
-    int i, j;
-
-    if (!board)
-    {
-        return -1;
-    }
-    
-    // primero inicializo los peones de las blancas
-    for(j=0; j<SIZE_BOARD; j++) {
-        board[1][j]=PEON;
-    }
-    
-    // ahora peones negras
-    for(j=0; j<SIZE_BOARD; j++) {
-        board[7][j]=PEON;
-    }
-    
-    //inicializo torres
-    for(i=0; i<SIZE_BOARD; i +=7) {
-        for(j=0; j<SIZE_BOARD; j +=7) {
-            board[i][j]=TORRE;
-        }
-    }
-    
-    //inicializo caballos
-    for(i=0; i<SIZE_BOARD; i +=7) {
-        for(j=1; j<SIZE_BOARD; j +=5) {
-            board[i][j]=CABALLO;
-        }
+short inicialpieces(Piece **pieces) {
+    //primero peones blancas
+    for (i = 0; i < (NUM_PIECES/2); i++)
+        pieces[0][i].type = PEON;
+        pieces[0][i].is_destroyed = 1;
+        pieces[0][i].xpos = i+1;
+        pieces[0][i].ypos = 2;
+        pieces[0][i].simbolo = "♟";
     }
 
-    //inicializo alfiles
-    for(i=0; i<SIZE_BOARD; i+=7) {
-        for(j=2; j<SIZE_BOARD; j +=3) {
-            board[i][j]=ALFIL;
-        }
+    //primero peones blancas
+    for (i = 0; i < (NUM_PIECES/2); i++)
+        pieces[1][i].type = PEON;
+        pieces[1][i].is_destroyed = 1;
+        pieces[1][i].xpos = i+1;
+        pieces[1][i].ypos = 2;
+        pieces[1][i].simbolo = "♟";
     }
 
-    //inicializo reina
-    for(i=0; i<SIZE_BOARD; i+=7) {
-        board[i][3]=REINA;
-    }
+    //torres
+        pieces[0][8].type = TORRE;
+        pieces[0][8].is_destroyed = 1;
+        pieces[0][8].xpos = 1;
+        pieces[0][8].ypos = 1;
+        pieces[0][8].simbolo = "♜";
 
-    //inicializo reyes
-    for(i=0; i<SIZE_BOARD; i+=7) {
-        board[i][4]=REY;
-    }
-    
-    return 0; //todo ha salido correcto
+        pieces[1][8].type = TORRE;
+        pieces[1][8].is_destroyed = 1;
+        pieces[1][8].xpos = 1;
+        pieces[1][8].ypos = 8;
+        pieces[1][8].simbolo = "♜";   
 }
 
 short findPieces(int fila, int columna, int jugador, Piece **pieces) {
@@ -162,17 +140,19 @@ short findPieces(int fila, int columna, int jugador, Piece **pieces) {
     
     for(i=0; i<NUM_PIECES && !piezacorrecta ; i++) {
         if((pieces[jugador][i]).xpos == columna && (pieces[jugador][i]).ypos ==fila) 
-            piezacorrecta=-2; //si la posicion de la pieza es igual a la fila y columna seleccionada es que hemos encontrado la pieza
+            return i; //si la posicion de la pieza es igual a la fila y columna seleccionada es que hemos encontrado la pieza
     }
 
-    return i; //devuelve posicion array
+    
+
+    return -2; //devuelve -2 si no ha encontrado la pieza
 }
 
 short move()
 {
 }
 
-short displayboard(long **board, Piece **pieces) {
+short displayboard(Piece **pieces) {
     int i,j,k;
     short piece; //alamacena la posicion de la ficha en cada caso
     
