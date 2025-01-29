@@ -63,7 +63,7 @@ short inicialpieces(Piece **pieces); //inicializa piezas
 short displayboard(long **board, Piece **pieces); //display de blancas/negra
 short findPieces(int fila, int columna, int jugador, Piece **pieces); //el jugador, es que cuando toque a las blancas enviamos 0, y sino 1
 
-int main()
+int main() 
 {
     system("chcp 65001 >nul"); //para que el compilador acepte codgos unicode
     long board[SIZE_BOARD][SIZE_BOARD];
